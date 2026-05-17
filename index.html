@@ -68,10 +68,7 @@
         <a href="#funcionalidades" class="hover:text-indigo-400 transition-colors">Funcionalidades</a>
         <a href="#download" class="hover:text-indigo-400 transition-colors">Download</a>
       </nav>
-      <a href="#download"
-         class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition-all hover:shadow-lg hover:shadow-indigo-500/30">
-        Baixar agora
-      </a>
+      <span id="header-cta"></span>
     </div>
   </header>
 
@@ -101,19 +98,7 @@
         gratuito e de código aberto.
       </p>
 
-      <div class="flex flex-col items-center gap-3">
-        <button id="btn-hero"
-                class="flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all hover:shadow-xl hover:shadow-indigo-500/30 hover:scale-105 animate-glow">
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-          </svg>
-          <span id="btn-hero-label">Carregando...</span>
-        </button>
-        <p class="text-slate-600 text-xs">
-          Versão <span id="version-hero">—</span> · Grátis · Sem registro
-        </p>
-      </div>
+      <div id="hero-cta" class="flex flex-col items-center gap-3"></div>
     </div>
   </section>
 
@@ -228,25 +213,9 @@
 
   <!-- ── Download ── -->
   <section id="download" class="max-w-6xl mx-auto px-6 py-24 text-center">
-    <h2 class="text-3xl font-bold text-white mb-3">Baixar Edu</h2>
-    <p class="text-slate-400 mb-14 max-w-lg mx-auto">
-      Disponível para Windows, Linux e macOS. Gratuito, sem registro, sem rastreamento.
-    </p>
-
-    <div id="download-cards" class="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-10">
-      <!-- preenchido pelo JS -->
-      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 animate-pulse h-48"></div>
-      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 animate-pulse h-48"></div>
-      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 animate-pulse h-48"></div>
-    </div>
-
-    <p class="text-slate-500 text-sm">
-      Versão <span id="version-download">—</span> ·
-      <a href="https://github.com/FernandoNandoz/Edu-app/releases"
-         class="text-indigo-400 hover:underline" target="_blank" rel="noopener">
-        Ver todas as versões no GitHub →
-      </a>
-    </p>
+    <h2 class="text-3xl font-bold text-white mb-3">Download</h2>
+    <p class="text-slate-400 mb-14 max-w-lg mx-auto" id="download-subtitle"></p>
+    <div id="download-area"></div>
   </section>
 
   <!-- ── Footer ── -->
@@ -256,28 +225,19 @@
         <img src="assets/img/mascote-redondo.png" alt="Edu" class="w-8 h-8 rounded-full">
         <span>Edu — Plataforma Educacional</span>
       </div>
-      <div class="flex items-center gap-6">
+      <div id="footer-links" class="flex items-center gap-6">
         <span>Átila Araújo · Fernando Damasceno</span>
-        <a href="https://github.com/FernandoNandoz/Edu-app"
-           class="hover:text-indigo-400 transition-colors flex items-center gap-1.5"
-           target="_blank" rel="noopener">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483
-                     0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466
-                     -.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832
-                     .092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688
-                     -.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844
-                     c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651
-                     .64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855
-                     0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-          </svg>
-          GitHub
-        </a>
       </div>
     </div>
   </footer>
 
   <script>
+    // ─── MODO DO SITE ───────────────────────────────────────────────
+    // true  → "Em breve" (oculta download e links do repositório)
+    // false → site completo com download dinâmico
+    const COMING_SOON = false;
+    // ────────────────────────────────────────────────────────────────
+
     const REPO = 'FernandoNandoz/Edu-app';
 
     const OS_META = {
@@ -303,20 +263,102 @@
       return (b / 1_048_576).toFixed(1) + ' MB';
     }
 
+    // ── Modo "Em breve" ──────────────────────────────────────────────
+    function renderComingSoon() {
+      document.getElementById('header-cta').innerHTML = `
+        <span class="bg-amber-500/10 border border-amber-500/30 text-amber-400 px-5 py-2 rounded-xl text-sm font-semibold">
+          Em breve
+        </span>`;
+
+      document.getElementById('hero-cta').innerHTML = `
+        <div class="flex items-center gap-3 bg-amber-500/10 border border-amber-500/30 text-amber-300 px-8 py-4 rounded-2xl text-lg font-semibold">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          Em breve
+        </div>
+        <p class="text-slate-600 text-xs">Grátis · Sem registro</p>`;
+
+      document.getElementById('download-subtitle').textContent =
+        'Disponível em breve para Windows, Linux e macOS. Gratuito, sem registro, sem rastreamento.';
+
+      document.getElementById('download-area').innerHTML = `
+        <div class="max-w-sm mx-auto rounded-2xl border border-amber-500/20 bg-amber-500/5 p-10 flex flex-col items-center gap-4">
+          <svg class="w-12 h-12 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <p class="text-amber-300 font-semibold text-xl">Em breve</p>
+          <p class="text-slate-500 text-sm">O lançamento está chegando. Fique de olho!</p>
+        </div>`;
+    }
+
+    // ── Modo release ─────────────────────────────────────────────────
+    function renderRelease() {
+      document.getElementById('header-cta').innerHTML = `
+        <a href="#download"
+           class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition-all hover:shadow-lg hover:shadow-indigo-500/30">
+          Baixar agora
+        </a>`;
+
+      document.getElementById('hero-cta').innerHTML = `
+        <button id="btn-hero"
+                class="flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all hover:shadow-xl hover:shadow-indigo-500/30 hover:scale-105 animate-glow">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          <span id="btn-hero-label">Carregando...</span>
+        </button>
+        <p class="text-slate-600 text-xs">Versão <span id="version-hero">—</span> · Grátis · Sem registro</p>`;
+
+      document.getElementById('download-subtitle').textContent =
+        'Disponível para Windows, Linux e macOS. Gratuito, sem registro, sem rastreamento.';
+
+      document.getElementById('download-area').innerHTML = `
+        <div id="download-cards" class="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-10">
+          <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 animate-pulse h-48"></div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 animate-pulse h-48"></div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 animate-pulse h-48"></div>
+        </div>
+        <p class="text-slate-500 text-sm">
+          Versão <span id="version-download">—</span> ·
+          <a href="https://github.com/${REPO}/releases"
+             class="text-indigo-400 hover:underline" target="_blank" rel="noopener">
+            Ver todas as versões no GitHub →
+          </a>
+        </p>`;
+
+      document.getElementById('footer-links').innerHTML = `
+        <span>Átila Araújo · Fernando Damasceno</span>
+        <a href="https://github.com/${REPO}"
+           class="hover:text-indigo-400 transition-colors flex items-center gap-1.5"
+           target="_blank" rel="noopener">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483
+                     0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466
+                     -.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832
+                     .092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688
+                     -.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844
+                     c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651
+                     .64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855
+                     0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          GitHub
+        </a>`;
+
+      loadRelease();
+    }
+
     async function loadRelease() {
       const userOS = detectOS();
-
       try {
         const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`);
         if (!res.ok) throw new Error('no release');
-        const release = await res.json();
-        const { assets, tag_name: version } = release;
+        const { assets, tag_name: version } = await res.json();
 
-        // update version strings
         document.getElementById('version-hero').textContent = version;
         document.getElementById('version-download').textContent = version;
 
-        // hero button
         const heroAsset = findAsset(assets, userOS);
         const heroBtn   = document.getElementById('btn-hero');
         const heroLabel = document.getElementById('btn-hero-label');
@@ -328,14 +370,11 @@
           heroBtn.onclick = () => document.getElementById('download').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // download cards
-        const platforms = ['windows', 'linux', 'macos'];
-        document.getElementById('download-cards').innerHTML = platforms.map(os => {
+        document.getElementById('download-cards').innerHTML = ['windows', 'linux', 'macos'].map(os => {
           const meta  = OS_META[os];
           const asset = findAsset(assets, os);
-          const isUser = os === userOS;
           return `
-            <div class="rounded-2xl border ${isUser ? 'border-indigo-500/60 bg-indigo-500/10' : 'border-slate-700 bg-slate-800/80'}
+            <div class="rounded-2xl border ${os === userOS ? 'border-indigo-500/60 bg-indigo-500/10' : 'border-slate-700 bg-slate-800/80'}
                         p-6 flex flex-col items-center gap-3 transition-colors">
               <span class="text-4xl">${meta.icon}</span>
               <h3 class="font-semibold text-white">${meta.label}</h3>
@@ -345,22 +384,18 @@
                    class="mt-auto w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-xl
                           text-sm font-medium transition-all text-center hover:shadow-lg" download>
                   Download
-                </a>
-              ` : `
+                </a>` : `
                 <p class="text-slate-500 text-xs mt-auto">Em breve</p>
-                <button disabled
-                        class="w-full bg-slate-700 text-slate-500 py-2 px-4 rounded-xl text-sm font-medium cursor-not-allowed">
+                <button disabled class="w-full bg-slate-700 text-slate-500 py-2 px-4 rounded-xl text-sm font-medium cursor-not-allowed">
                   Indisponível
-                </button>
-              `}
+                </button>`}
             </div>`;
         }).join('');
 
       } catch {
-        // fallback — direct to GitHub releases page
-        const heroBtn = document.getElementById('btn-hero');
         document.getElementById('btn-hero-label').textContent = 'Ver releases no GitHub';
-        heroBtn.onclick = () => window.open(`https://github.com/${REPO}/releases`, '_blank');
+        document.getElementById('btn-hero').onclick =
+          () => window.open(`https://github.com/${REPO}/releases`, '_blank');
 
         document.getElementById('download-cards').innerHTML = `
           <div class="col-span-3 py-10 text-center">
@@ -373,7 +408,8 @@
       }
     }
 
-    loadRelease();
+    // ── Inicialização ─────────────────────────────────────────────────
+    COMING_SOON ? renderComingSoon() : renderRelease();
   </script>
 </body>
 </html>
