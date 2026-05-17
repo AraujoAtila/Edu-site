@@ -238,8 +238,6 @@
     const COMING_SOON = true;
     // ────────────────────────────────────────────────────────────────
 
-    const REPO = 'FernandoNandoz/Edu-app';
-
     const OS_META = {
       windows: { label: 'Windows', icon: '🪟', exts: ['.exe', '.msi'] },
       linux:   { label: 'Linux (.deb)', icon: '🐧', exts: ['.deb'] },
@@ -294,6 +292,7 @@
 
     // ── Modo release ─────────────────────────────────────────────────
     function renderRelease() {
+      const REPO = 'FernandoNandoz/Edu-app';
       document.getElementById('header-cta').innerHTML = `
         <a href="#download"
            class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition-all hover:shadow-lg hover:shadow-indigo-500/30">
@@ -346,10 +345,10 @@
           GitHub
         </a>`;
 
-      loadRelease();
+      loadRelease(REPO);
     }
 
-    async function loadRelease() {
+    async function loadRelease(REPO) {
       const userOS = detectOS();
       try {
         const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`);
