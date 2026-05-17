@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edu — Algoritmos de Escalonamento de Processos</title>
+  <meta name="description" content="Plataforma educacional interativa para aprender algoritmos de escalonamento de processos, com narração em Nheengatu pelo assistente Kurumiwasú.">
+  <link rel="icon" href="assets/img/mascote-redondo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            primary: { 500: '#6366f1', 600: '#5b5bf6', 700: '#4f46e5' },
+            secondary: { 500: '#10b981', 600: '#059669' },
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite',
+            'fade-in': 'fadeIn 0.6s ease-in-out both',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            glow: {
+              '0%, 100%': { boxShadow: '0 0 20px rgba(99,102,241,0.3)' },
+              '50%': { boxShadow: '0 0 45px rgba(99,102,241,0.65)' },
+            },
+            fadeIn: {
+              from: { opacity: '0', transform: 'translateY(20px)' },
+              to:   { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body { background-color: #0f172a; font-family: 'Poppins', system-ui, sans-serif; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1e293b; }
+    ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    ::selection { background: #6366f1; color: #fff; }
+  </style>
+</head>
+<body class="text-slate-100 min-h-screen">
+
+  <!-- ── Header ── -->
+  <header class="sticky top-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="assets/img/mascote-redondo.png" alt="Edu" class="w-11 h-11 rounded-full ring-2 ring-indigo-500/40">
+        <span class="text-xl font-bold text-indigo-400">Edu</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="#sobre" class="hover:text-indigo-400 transition-colors">Sobre</a>
+        <a href="#funcionalidades" class="hover:text-indigo-400 transition-colors">Funcionalidades</a>
+        <a href="#download" class="hover:text-indigo-400 transition-colors">Download</a>
+      </nav>
+      <a href="#download"
+         class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition-all hover:shadow-lg hover:shadow-indigo-500/30">
+        Baixar agora
+      </a>
+    </div>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section id="sobre" class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center bg-fixed opacity-15"
+         style="background-image: url('assets/img/background.png')"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-indigo-900/30 via-transparent to-[#0f172a]"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6 py-36 flex flex-col items-center text-center animate-fade-in">
+      <img src="assets/img/mascote-redondo.png" alt="Kurumiwasú"
+           class="w-44 h-44 rounded-full mb-8 animate-float shadow-2xl ring-4 ring-indigo-500/40">
+
+      <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 px-4 py-1.5 rounded-full text-sm mb-6">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+        Plataforma Educacional Interativa
+      </div>
+
+      <h1 class="text-7xl font-bold text-indigo-400 mb-3">Edu</h1>
+      <p class="text-2xl md:text-3xl font-light text-slate-300 mb-6">
+        Algoritmos de Escalonamento de Processos
+      </p>
+      <p class="text-slate-400 max-w-2xl text-lg leading-relaxed mb-12">
+        Aprenda de forma interativa com narração em
+        <span class="text-green-400 font-medium">Nheengatu</span> pelo assistente
+        <span class="text-indigo-400 font-medium">Kurumiwasú</span> — um app desktop
+        gratuito e de código aberto.
+      </p>
+
+      <div class="flex flex-col items-center gap-3">
+        <button id="btn-hero"
+                class="flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all hover:shadow-xl hover:shadow-indigo-500/30 hover:scale-105 animate-glow">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          <span id="btn-hero-label">Carregando...</span>
+        </button>
+        <p class="text-slate-600 text-xs">
+          Versão <span id="version-hero">—</span> · Grátis · Sem registro
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Funcionalidades ── -->
+  <section id="funcionalidades" class="max-w-6xl mx-auto px-6 py-24">
+    <h2 class="text-3xl font-bold text-center text-white mb-3">Funcionalidades</h2>
+    <p class="text-slate-400 text-center mb-14 max-w-lg mx-auto">
+      Tudo que você precisa para dominar o escalonamento de processos
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 backdrop-blur-sm p-6 shadow-lg hover:bg-slate-800/50 transition-colors">
+        <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">Algoritmos Interativos</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Visualize e interaja com FIFO, SJF, Round Robin, Prioridades e outros algoritmos de escalonamento em tempo real.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 backdrop-blur-sm p-6 shadow-lg hover:bg-slate-800/50 transition-colors">
+        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">Narração em Nheengatu</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Kurumiwasú narra cada conceito em Nheengatu via TTS Kokoro, valorizando a língua geral amazônica.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 backdrop-blur-sm p-6 shadow-lg hover:bg-slate-800/50 transition-colors">
+        <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">Aprendizado Guiado</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Aulas estruturadas com progresso rastreado, exercícios práticos e feedback imediato para fixar o conteúdo.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 backdrop-blur-sm p-6 shadow-lg hover:bg-slate-800/50 transition-colors">
+        <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">App Desktop</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Construído com Tauri 2 e React — leve, rápido e nativo. Funciona em Windows, Linux e macOS.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 backdrop-blur-sm p-6 shadow-lg hover:bg-slate-800/50 transition-colors">
+        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">Conteúdo Gratuito</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Acesso completo e gratuito a todos os cursos e algoritmos. Educação de qualidade sem barreiras.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 backdrop-blur-sm p-6 shadow-lg hover:bg-slate-800/50 transition-colors">
+        <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-2">Código Aberto</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Projeto open source no GitHub. Contribua, reporte bugs ou adapte para suas necessidades.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Kurumiwasú spotlight ── -->
+  <section class="max-w-6xl mx-auto px-6 py-8 pb-24">
+    <div class="rounded-3xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 to-green-500/5 p-10
+                flex flex-col md:flex-row items-center gap-10">
+      <img src="assets/img/mascote-falando.png" alt="Kurumiwasú falando"
+           class="w-40 h-40 object-contain flex-shrink-0">
+      <div>
+        <h2 class="text-2xl font-bold text-white mb-3">
+          Conheça o <span class="text-indigo-400">Kurumiwasú</span>
+        </h2>
+        <p class="text-slate-300 leading-relaxed mb-4">
+          Seu assistente de aprendizado bilíngue. O nome vem do Nheengatu — língua geral amazônica —
+          e significa <span class="text-green-400 font-medium">"pequeno menino esperto"</span>.
+          Ele guia você por cada algoritmo com explicações claras e narração na língua dos povos originários.
+        </p>
+        <p class="text-slate-500 text-sm">
+          Uma homenagem à diversidade cultural brasileira no coração da tecnologia.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Download ── -->
+  <section id="download" class="max-w-6xl mx-auto px-6 py-24 text-center">
+    <h2 class="text-3xl font-bold text-white mb-3">Baixar Edu</h2>
+    <p class="text-slate-400 mb-14 max-w-lg mx-auto">
+      Disponível para Windows, Linux e macOS. Gratuito, sem registro, sem rastreamento.
+    </p>
+
+    <div id="download-cards" class="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-10">
+      <!-- preenchido pelo JS -->
+      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 animate-pulse h-48"></div>
+      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 animate-pulse h-48"></div>
+      <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 animate-pulse h-48"></div>
+    </div>
+
+    <p class="text-slate-500 text-sm">
+      Versão <span id="version-download">—</span> ·
+      <a href="https://github.com/FernandoNandoz/Edu-app/releases"
+         class="text-indigo-400 hover:underline" target="_blank" rel="noopener">
+        Ver todas as versões no GitHub →
+      </a>
+    </p>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="bg-black/20 backdrop-blur-md border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+      <div class="flex items-center gap-3">
+        <img src="assets/img/mascote-redondo.png" alt="Edu" class="w-8 h-8 rounded-full">
+        <span>Edu — Plataforma Educacional</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <span>Átila Araújo · Fernando Damasceno</span>
+        <a href="https://github.com/FernandoNandoz/Edu-app"
+           class="hover:text-indigo-400 transition-colors flex items-center gap-1.5"
+           target="_blank" rel="noopener">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483
+                     0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466
+                     -.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832
+                     .092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688
+                     -.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844
+                     c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651
+                     .64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855
+                     0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const REPO = 'FernandoNandoz/Edu-app';
+
+    const OS_META = {
+      windows: { label: 'Windows', icon: '🪟', exts: ['.exe', '.msi'] },
+      linux:   { label: 'Linux (.deb)', icon: '🐧', exts: ['.deb'] },
+      macos:   { label: 'macOS', icon: '🍎', exts: ['.dmg'] },
+    };
+
+    function detectOS() {
+      const ua = navigator.userAgent.toLowerCase();
+      if (ua.includes('win')) return 'windows';
+      if (ua.includes('mac')) return 'macos';
+      if (ua.includes('linux')) return 'linux';
+      return 'unknown';
+    }
+
+    function findAsset(assets, os) {
+      const exts = OS_META[os]?.exts ?? [];
+      return assets.find(a => exts.some(ext => a.name.endsWith(ext))) ?? null;
+    }
+
+    function fmtBytes(b) {
+      return (b / 1_048_576).toFixed(1) + ' MB';
+    }
+
+    async function loadRelease() {
+      const userOS = detectOS();
+
+      try {
+        const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`);
+        if (!res.ok) throw new Error('no release');
+        const release = await res.json();
+        const { assets, tag_name: version } = release;
+
+        // update version strings
+        document.getElementById('version-hero').textContent = version;
+        document.getElementById('version-download').textContent = version;
+
+        // hero button
+        const heroAsset = findAsset(assets, userOS);
+        const heroBtn   = document.getElementById('btn-hero');
+        const heroLabel = document.getElementById('btn-hero-label');
+        if (heroAsset) {
+          heroLabel.textContent = `Baixar para ${OS_META[userOS]?.label ?? userOS}`;
+          heroBtn.onclick = () => window.open(heroAsset.browser_download_url, '_blank');
+        } else {
+          heroLabel.textContent = 'Ver downloads';
+          heroBtn.onclick = () => document.getElementById('download').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // download cards
+        const platforms = ['windows', 'linux', 'macos'];
+        document.getElementById('download-cards').innerHTML = platforms.map(os => {
+          const meta  = OS_META[os];
+          const asset = findAsset(assets, os);
+          const isUser = os === userOS;
+          return `
+            <div class="rounded-2xl border ${isUser ? 'border-indigo-500/60 bg-indigo-500/10' : 'border-slate-700 bg-slate-800/80'}
+                        p-6 flex flex-col items-center gap-3 transition-colors">
+              <span class="text-4xl">${meta.icon}</span>
+              <h3 class="font-semibold text-white">${meta.label}</h3>
+              ${asset ? `
+                <p class="text-slate-500 text-xs">${fmtBytes(asset.size)}</p>
+                <a href="${asset.browser_download_url}"
+                   class="mt-auto w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-xl
+                          text-sm font-medium transition-all text-center hover:shadow-lg" download>
+                  Download
+                </a>
+              ` : `
+                <p class="text-slate-500 text-xs mt-auto">Em breve</p>
+                <button disabled
+                        class="w-full bg-slate-700 text-slate-500 py-2 px-4 rounded-xl text-sm font-medium cursor-not-allowed">
+                  Indisponível
+                </button>
+              `}
+            </div>`;
+        }).join('');
+
+      } catch {
+        // fallback — direct to GitHub releases page
+        const heroBtn = document.getElementById('btn-hero');
+        document.getElementById('btn-hero-label').textContent = 'Ver releases no GitHub';
+        heroBtn.onclick = () => window.open(`https://github.com/${REPO}/releases`, '_blank');
+
+        document.getElementById('download-cards').innerHTML = `
+          <div class="col-span-3 py-10 text-center">
+            <p class="text-slate-400 mb-4">Não foi possível carregar a última versão automaticamente.</p>
+            <a href="https://github.com/${REPO}/releases"
+               class="text-indigo-400 hover:underline" target="_blank" rel="noopener">
+              Acessar releases no GitHub →
+            </a>
+          </div>`;
+      }
+    }
+
+    loadRelease();
+  </script>
+</body>
+</html>
