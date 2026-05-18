@@ -69,4 +69,6 @@ Hospedado via GitHub Pages com deploy automático ao fazer push na branch `main`
 
 ## Repositório do app
 
-O código-fonte do Edu-app está em [FernandoNandoz/Edu-app](https://github.com/FernandoNandoz/Edu-app).
+O código-fonte do Edu-app está em [FernandoNandoz/Edu-app](https://github.com/FernandoNandoz/Edu-app). 
+
+![alt text](image.png)
