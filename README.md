@@ -2,7 +2,7 @@
 
 Site de apresentação do [Edu-app](https://github.com/FernandoNandoz/Edu-app) — plataforma educacional interativa para aprender algoritmos de escalonamento de processos, com narração em Nheengatu pelo assistente Kurumiwasú.
 
-**Site:** https://fernandonandoz.github.io/edu-site/
+**Site:** https://araujoatila.github.io/edu-site/
 
 ## Stack
 
