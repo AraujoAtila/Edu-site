@@ -1,6 +1,6 @@
 # Edu-site
 
-Site de apresentação do [Edu-app](https://github.com/FernandoNandoz/Edu-app) — plataforma educacional interativa para aprender algoritmos de escalonamento de processos, com narração em Nheengatu pelo assistente Kurumiwasú.
+Site de apresentação do [Edu-app](https://github.com/araujoatila/Edu-app) — plataforma educacional interativa para aprender algoritmos de escalonamento de processos, com narração em Nheengatu pelo assistente Kurumiwasú.
 
 **Site:** https://araujoatila.github.io/edu-site/
 
@@ -69,6 +69,6 @@ Hospedado via GitHub Pages com deploy automático ao fazer push na branch `main`
 
 ## Repositório do app
 
-O código-fonte do Edu-app está em [FernandoNandoz/Edu-app](https://github.com/FernandoNandoz/Edu-app). 
+O código-fonte do Edu-app está em [AraujoAtila/Edu-app](https://github.com/araujoatila/Edu-app). 
 
 ![alt text](image.png)
