@@ -2,7 +2,7 @@
 
 Site de apresentação do [Edu-app](https://github.com/araujoatila/Edu-app) — plataforma educacional interativa para aprender algoritmos de escalonamento de processos, com narração em Nheengatu pelo assistente Kurumimwasú.
 
-![Captura de tela do site](image.png)
+![Captura de tela do site](/assets//img/image.png)
 
 ## Stack
 
