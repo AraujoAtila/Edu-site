@@ -1,57 +1,65 @@
 # Edu-site
 
-Site de apresentação do [Edu-app](https://github.com/araujoatila/Edu-app) — plataforma educacional interativa para aprender algoritmos de escalonamento de processos, com narração em Nheengatu pelo assistente Kurumiwasú.
+Site de apresentação do [Edu-app](https://github.com/araujoatila/Edu-app) — plataforma educacional interativa para aprender algoritmos de escalonamento de processos, com narração em Nheengatu pelo assistente Kurumimwasú.
+
+![Captura de tela do site](image.png)
 
 ## Stack
 
-- HTML puro + Tailwind CSS via CDN
+- HTML puro + [Tailwind CSS](https://tailwindcss.com) via CDN (configuração inline no `<head>`)
+- Fonte Poppins via Google Fonts
 - JavaScript vanilla
 - Sem build step, sem dependências npm
 
-## Modos do site
+## Estrutura
 
-O site possui dois modos controlados pela flag `COMING_SOON` no topo do `<script>` em `index.html`:
-
-| Modo | Valor | O que exibe |
-|---|---|---|
-| Em breve | `true` | Badge "Em breve", sem links do repositório |
-| Lançamento | `false` | Botão de download dinâmico + link do GitHub |
-
-### Alternar entre os modos
-
-Execute o script `toggle.sh` na raiz do projeto:
-
-```bash
-./toggle.sh
+```
+.
+├── index.html                  # Página única do site
+├── assets/
+│   ├── img/                    # Logo, mascote e imagem de fundo
+│   └── release/
+│       └── Edu_2.2.1_x64-setup.exe   # Instalador do Edu-app (Git LFS)
+├── .github/workflows/deploy.yml      # Deploy no GitHub Pages
+├── .gitattributes              # Arquivos *.exe rastreados via Git LFS
+└── image.png                   # Captura de tela usada neste README
 ```
 
-Ele detecta o modo atual, vira para o oposto, cria o commit e tenta o push. Se o push falhar por permissão SSH, rode manualmente em seguida:
+## Seções da página
+
+| Âncora | Conteúdo |
+|---|---|
+| `#inicio` | Hero com apresentação do Edu e botão **Baixar para Windows** |
+| `#funcionalidades` | Cards com as funcionalidades do app (algoritmos interativos, narração em Nheengatu, aprendizado guiado, app desktop, conteúdo gratuito, bilíngue) |
+| `#sobre` | Apresentação do mascote Kurumimwasú |
+
+O botão do header ("Baixar agora") e os links do rodapé (autor e GitHub) são renderizados pela função `renderRelease()`, no `<script>` ao final do `index.html`.
+
+## Download do instalador
+
+O instalador do Windows é servido diretamente pelo próprio site, a partir de `assets/release/`. Arquivos `.exe` são versionados com **Git LFS**, então é preciso tê-lo instalado:
 
 ```bash
+git lfs install
+```
+
+### Publicar uma nova versão do app
+
+1. Copie o novo instalador para `assets/release/` (e remova o antigo, se quiser).
+2. Atualize a constante `INSTALLER` no `<script>` ao final do `index.html`:
+
+   ```js
+   const INSTALLER = 'assets/release/Edu_2.2.1_x64-setup.exe';
+   ```
+
+   Os dois botões de download (hero e header) usam essa constante, e a versão exibida abaixo do botão é extraída do nome do arquivo (padrão `Edu_<versão>_...`).
+3. Commite e faça push:
+
+```bash
+git add assets/release index.html
+git commit -m "release: Edu x.y.z"
 git push
 ```
-
-Após o push, o GitHub Actions faz o deploy automaticamente em alguns segundos.
-
-### Alterar manualmente (opcional)
-
-Abra `index.html` e edite a linha:
-
-```js
-const COMING_SOON = true; // true = em breve | false = download ativo
-```
-
-Depois commite e faça push:
-
-```bash
-git add index.html
-git commit -m "release: ativa modo de download público"
-git push
-```
-
-## Download dinâmico
-
-Quando `COMING_SOON = false`, o botão de download consome a GitHub Releases API para sempre apontar para o instalador mais recente do Edu-app, com detecção automática do sistema operacional do usuário (`.exe`/`.msi` para Windows, `.deb` para Linux, `.dmg` para macOS).
 
 ## Desenvolvimento local
 
@@ -63,10 +71,8 @@ python3 -m http.server 8080
 
 ## Deploy
 
-Hospedado via GitHub Pages com deploy automático ao fazer push na branch `main`.
+Hospedado via GitHub Pages. O workflow `.github/workflows/deploy.yml` faz o checkout com `lfs: true` (para publicar o instalador real, e não o ponteiro do LFS) e publica a raiz do repositório a cada push na branch `main` (também pode ser disparado manualmente em *Actions → Deploy to GitHub Pages → Run workflow*).
 
 ## Repositório do app
 
-O código-fonte do Edu-app está em [AraujoAtila/Edu-app](https://github.com/araujoatila/Edu-app). 
-
-![alt text](image.png)
+O código-fonte do Edu-app está em [araujoatila/Edu-app](https://github.com/araujoatila/Edu-app).
