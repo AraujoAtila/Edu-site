@@ -238,11 +238,9 @@
 
   <script>
     // ── Modo release ─────────────────────────────────────────────────
-    function renderRelease() {
-      const REPO = 'AraujoAtila/Edu-app';
-      
+    function renderRelease() {      
       document.getElementById('header-cta').innerHTML = `
-        <a href="/assets/release/Edu_2.2.1_x64-setup.exe"
+        <a href={"/assets/release/Edu_2.2.1_x64-setup.exe"}
            class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition-all hover:shadow-lg hover:shadow-indigo-500/30">
           Baixar agora
         </a>`;
